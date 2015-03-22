@@ -15,7 +15,7 @@ plot3 <- function(table3=NULL, preview=TRUE) {
         table3 <- aggregate(baltimore$Emissions, 
                             by = list(baltimore$year, baltimore$type), 
                             FUN=sum )
-        names(table3)[2] <- "type"
+        names(table3) <- c("year", "type", "PM25total")
     }
     
     # send to computer screen unless preview == FALSE is used to specify a 
@@ -24,7 +24,7 @@ plot3 <- function(table3=NULL, preview=TRUE) {
     if (!preview) png("plot3.pdf", width=640, height=480)
     
     p <- ggplot(table3)
-    p <- p + geom_line(aes(x=Group.1, y=x, colour=type))
+    p <- p + geom_line(aes(x=year, y=PM25total, colour=type))
     p <- p + labs(x="Year", y="PM2.5 Emissions (tons)")
     p <- p + ggtitle("Categories of Baltimore PM2.5 Emissions")
     
